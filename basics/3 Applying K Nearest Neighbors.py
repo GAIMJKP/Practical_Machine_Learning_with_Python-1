@@ -3,18 +3,20 @@ from sklearn import preprocessing, neighbors, datasets
 from sklearn.model_selection import train_test_split
 import pandas as pd
 
-
+# Read dataset
 df = pd.read_csv('breast-cancer-wisconsin.data.txt')
 
-
+# Deal with null values
 df.replace('?',value=-99999, inplace=True)
 df.drop(['id'], 1, inplace=True)
 
 X = np.array(df.drop(['class'], 1))
 y = np.array(df['class'])
 
+# Split into train and test
 X_train, X_test,y_train,y_test = train_test_split(X,y, test_size=0.2)
 
+# K nearest
 clf = neighbors.KNeighborsClassifier()
 clf.fit(X_train, y_train)
 accuracy = clf.score(X_test, y_test)
